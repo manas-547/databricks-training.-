@@ -1,4 +1,4 @@
-## SCHEMA SQL
+## SCHEMA SQl
 
 -- Create Employee Table
 CREATE TABLE Employee (
