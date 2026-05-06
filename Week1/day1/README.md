@@ -1,213 +1,489 @@
-# 📌 Advanced SQL Concepts Covered
+# Employee Management SQL Database
 
-This project demonstrates advanced SQL operations and analytical query writing using a relational employee management database.
+## 📌 Project Overview
 
----
+This project demonstrates the creation and usage of a simple Employee Management Database using SQL.
 
-# ✅ HAVING Clause
+The database contains three main tables:
 
-The project uses the `HAVING` clause to filter grouped records after applying aggregate functions.
+1. Department
+2. Employee
+3. Project
 
-### Concepts Practiced
-
-- Filtering grouped data
-- Finding departments based on employee count
-- Salary-based departmental analysis
-- Aggregated condition checking
-
-### Examples Covered
-
-- Departments with more than a specific number of employees
-- Departments with high average salary
-- Departments with low total salary expense
-- Years with multiple employee hirings
-
----
-
-# ✅ ORDER BY Clause
-
-The project demonstrates sorting records in both ascending and descending order.
-
-### Concepts Practiced
-
-- Sorting employee data
-- Multi-column sorting
-- Salary-based ordering
-- Date-based ordering
-
-### Examples Covered
-
-- Employees sorted by salary
-- Employees sorted by age
-- Employees sorted by hiring date
-- Department salary ranking
+The project includes:
+- Table creation queries
+- Primary and foreign key relationships
+- Sample data insertion
+- SQL queries for:
+  - Selection
+  - Filtering
+  - Pattern matching
+  - Date functions
+  - Aggregate functions
+  - Grouping
+  - Joins
 
 ---
 
-# ✅ JOIN Operations
+# 📂 Database Structure
 
-The project includes multiple join operations to combine related data from different tables.
+## 1️⃣ Department Table
 
-### Types of Joins Practiced
+Stores department details.
 
-- INNER JOIN
-- LEFT JOIN
+| Column | Data Type | Constraints |
+|---|---|---|
+| department_id | INT | PRIMARY KEY |
+| name | VARCHAR(50) | NOT NULL |
 
-### Concepts Practiced
+### Example Data
 
-- Combining employee and department data
-- Combining project and department data
-- Handling NULL relationships
-- Retrieving unmatched records
-- Department-wise project analysis
-
-### Real-World Scenarios Covered
-
-- Employees without departments
-- Departments without employees
-- Employees working on departmental projects
-- Project allocation analysis
+| department_id | name |
+|---|---|
+| 1 | IT |
+| 2 | HR |
+| 3 | Finance |
+| 4 | Marketing |
 
 ---
 
-# ✅ Nested Queries
+## 2️⃣ Employee Table
 
-The project demonstrates subqueries used inside other SQL queries.
+Stores employee information.
 
-### Concepts Practiced
+| Column | Data Type | Constraints |
+|---|---|---|
+| emp_id | INT | PRIMARY KEY |
+| name | VARCHAR(100) | NOT NULL |
+| age | INT | - |
+| salary | DECIMAL(10,2) | - |
+| department_id | INT | FOREIGN KEY |
+| hire_date | DATE | - |
 
-- Scalar subqueries
-- Nested filtering
-- Aggregate comparisons
-- Multi-level querying
+# 📌 Concepts Covered
 
-### Examples Covered
-
-- Highest salary employee
-- Second highest salary
-- Third highest salary
-- Employees earning above average salary
-- Employees hired on matching dates
+This project demonstrates the following SQL concepts:
 
 ---
 
-# ✅ Correlated Queries
+## ✅ DDL (Data Definition Language)
 
-The project includes correlated subqueries where the inner query depends on the outer query.
-
-### Concepts Practiced
-
-- Department-wise salary comparison
-- Employee-wise aggregate analysis
-- Row-by-row subquery execution
-
-### Examples Covered
-
-- Employees earning above department average
-- Employees older than department average age
-- Highest paid employee in each department
+- `CREATE TABLE`
+- `PRIMARY KEY`
+- `FOREIGN KEY`
 
 ---
 
-# ✅ Aggregate Functions
+## ✅ DML (Data Manipulation Language)
 
-The project uses aggregate functions extensively for analytical operations.
-
-### Aggregate Functions Used
-
-- `SUM()`
-- `AVG()`
-- `MAX()`
-- `MIN()`
-- `COUNT()`
-
-### Applications
-
-- Salary analysis
-- Employee counting
-- Department performance analysis
-- Hiring statistics
+- `INSERT INTO`
 
 ---
 
-# ✅ GROUP BY Operations
+## ✅ Filtering Queries
 
-The project groups records to perform department-wise and year-wise analysis.
-
-### Concepts Practiced
-
-- Department grouping
-- Year-based grouping
-- Aggregated reporting
-- Statistical summaries
+- `WHERE`
+- `AND / OR`
+- Comparison Operators
 
 ---
 
-# ✅ Date Functions
+## ✅ Pattern Matching
 
-The project demonstrates SQL date manipulation and extraction functions.
+Using `LIKE`
 
-### Date Functions Used
-
-- `YEAR()`
-- `MONTH()`
-- `CURDATE()`
-- `DATE_SUB()`
-
-### Applications
-
-- Hiring year analysis
-- Monthly hiring analysis
-- Recent employee filtering
-- Time-based reporting
+| Pattern | Meaning |
+|---|---|
+| `J%` | Starts with J |
+| `%e` | Ends with e |
+| `%a%` | Contains a |
+| `_o%` | Second character is o |
 
 ---
 
-# ✅ NULL Handling
+## ✅ Date Functions
 
-The database intentionally includes NULL values to practice handling incomplete relationships.
+| Function | Purpose |
+|---|---|
+| `YEAR()` | Extract year |
+| `MONTH()` | Extract month |
+| `CURDATE()` | Current date |
+| `DATE_SUB()` | Subtract interval |
 
-### Scenarios Covered
+### Example
 
-- Employees without departments
-- Projects without departments
-- Missing relational mappings
+```sql
+SELECT *
+FROM Employee
+WHERE hire_date >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR);
+```
 
-### Concepts Practiced
-
-- NULL checking
-- LEFT JOIN analysis
-- Unmatched data retrieval
+This query selects employees hired within the last 2 years.
 
 ---
 
-# 📊 Analytical Reporting Features
+## ✅ Aggregate Functions
 
-This project supports several analytical operations such as:
+| Function | Purpose |
+|---|---|
+| `SUM()` | Total |
+| `AVG()` | Average |
+| `MIN()` | Minimum |
+| `MAX()` | Maximum |
+| `COUNT()` | Count rows |
 
-- Department-wise salary reports
-- Employee distribution analysis
-- Project allocation tracking
-- Hiring trend analysis
-- Highest and lowest salary identification
-- Average salary reporting
-- Department performance evaluation
+---
+
+## ✅ GROUP BY
+
+Used for grouping records department-wise or year-wise.
+
+### Example
+
+```sql
+SELECT department_id, AVG(salary)
+FROM Employee
+GROUP BY department_id;
+```
+
+---
+
+## ✅ JOIN Operations
+
+### INNER JOIN
+
+Used to combine matching rows between tables.
+
+### Example
+
+```sql
+SELECT e.*
+FROM Employee e
+JOIN Department d
+ON e.department_id = d.department_id
+WHERE d.name = 'IT';
+```
+
+---
+
+# 📌 Important Edge Cases Included
+
+This project intentionally includes edge cases for better SQL practice.
+
+---
+
+## Employees Without Departments
+
+```text
+Frank White → department_id = NULL
+```
+
+Useful for:
+
+- `LEFT JOIN` practice
+- `NULL` handling
+
+---
+
+## Projects Without Departments
+
+```text
+Project Iota → department_id = NULL
+```
+
+Useful for:
+
+- `OUTER JOIN` practice
+- Data integrity testing
+
+---
+
+# 📊 Sample Analytical Queries
+
+## Average Salary Per Department
+
+```sql
+SELECT department_id, AVG(salary)
+FROM Employee
+GROUP BY department_id;
+```
+
+---
+
+## Highest Salary Per Department
+
+```sql
+SELECT department_id, MAX(salary)
+FROM Employee
+GROUP BY department_id;
+```
+
+---
+
+## Employee Count By Hiring Year
+
+```sql
+SELECT YEAR(hire_date), COUNT(*)
+FROM Employee
+GROUP BY YEAR(hire_date);
+```
 
 ---
 
 # 🚀 Learning Outcomes
 
-After completing this work, you will understand:
+After completing this project, you will understand:
 
-- Relational database concepts
-- Advanced SQL query writing
-- Aggregate data analysis
-- Grouping and filtering techniques
-- Join operations and relationships
-- Nested and correlated subqueries
-- Sorting and ranking records
-- Real-world employee database analysis
-- SQL analytical reporting
-- Handling NULL values and edge cases
+- Relational database design
+- Primary and foreign keys
+- SQL joins
+- Filtering data
+- Aggregate functions
+- Grouping
+- Date handling in SQL
+- Pattern matching
+- Real-world database relationships# Employee Management SQL Database
+
+## 📌 Project Overview
+
+This project demonstrates the creation and usage of a simple Employee Management Database using SQL.
+
+The database contains three main tables:
+
+1. Department
+2. Employee
+3. Project
+
+The project includes:
+- Table creation queries
+- Primary and foreign key relationships
+- Sample data insertion
+- SQL queries for:
+  - Selection
+  - Filtering
+  - Pattern matching
+  - Date functions
+  - Aggregate functions
+  - Grouping
+  - Joins
 
 ---
+
+# 📂 Database Structure
+
+## 1️⃣ Department Table
+
+Stores department details.
+
+| Column | Data Type | Constraints |
+|---|---|---|
+| department_id | INT | PRIMARY KEY |
+| name | VARCHAR(50) | NOT NULL |
+
+### Example Data
+
+| department_id | name |
+|---|---|
+| 1 | IT |
+| 2 | HR |
+| 3 | Finance |
+| 4 | Marketing |
+
+---
+
+## 2️⃣ Employee Table
+
+Stores employee information.
+
+| Column | Data Type | Constraints |
+|---|---|---|
+| emp_id | INT | PRIMARY KEY |
+| name | VARCHAR(100) | NOT NULL |
+| age | INT | - |
+| salary | DECIMAL(10,2) | - |
+| department_id | INT | FOREIGN KEY |
+| hire_date | DATE | - |
+
+# 📌 Concepts Covered
+
+This project demonstrates the following SQL concepts:
+
+---
+
+## ✅ DDL (Data Definition Language)
+
+- `CREATE TABLE`
+- `PRIMARY KEY`
+- `FOREIGN KEY`
+
+---
+
+## ✅ DML (Data Manipulation Language)
+
+- `INSERT INTO`
+
+---
+
+## ✅ Filtering Queries
+
+- `WHERE`
+- `AND / OR`
+- Comparison Operators
+
+---
+
+## ✅ Pattern Matching
+
+Using `LIKE`
+
+| Pattern | Meaning |
+|---|---|
+| `J%` | Starts with J |
+| `%e` | Ends with e |
+| `%a%` | Contains a |
+| `_o%` | Second character is o |
+
+---
+
+## ✅ Date Functions
+
+| Function | Purpose |
+|---|---|
+| `YEAR()` | Extract year |
+| `MONTH()` | Extract month |
+| `CURDATE()` | Current date |
+| `DATE_SUB()` | Subtract interval |
+
+### Example
+
+```sql
+SELECT *
+FROM Employee
+WHERE hire_date >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR);
+```
+
+This query selects employees hired within the last 2 years.
+
+---
+
+## ✅ Aggregate Functions
+
+| Function | Purpose |
+|---|---|
+| `SUM()` | Total |
+| `AVG()` | Average |
+| `MIN()` | Minimum |
+| `MAX()` | Maximum |
+| `COUNT()` | Count rows |
+
+---
+
+## ✅ GROUP BY
+
+Used for grouping records department-wise or year-wise.
+
+### Example
+
+```sql
+SELECT department_id, AVG(salary)
+FROM Employee
+GROUP BY department_id;
+```
+
+---
+
+## ✅ JOIN Operations
+
+### INNER JOIN
+
+Used to combine matching rows between tables.
+
+### Example
+
+```sql
+SELECT e.*
+FROM Employee e
+JOIN Department d
+ON e.department_id = d.department_id
+WHERE d.name = 'IT';
+```
+
+---
+
+# 📌 Important Edge Cases Included
+
+This project intentionally includes edge cases for better SQL practice.
+
+---
+
+## Employees Without Departments
+
+```text
+Frank White → department_id = NULL
+```
+
+Useful for:
+
+- `LEFT JOIN` practice
+- `NULL` handling
+
+---
+
+## Projects Without Departments
+
+```text
+Project Iota → department_id = NULL
+```
+
+Useful for:
+
+- `OUTER JOIN` practice
+- Data integrity testing
+
+---
+
+# 📊 Sample Analytical Queries
+
+## Average Salary Per Department
+
+```sql
+SELECT department_id, AVG(salary)
+FROM Employee
+GROUP BY department_id;
+```
+
+---
+
+## Highest Salary Per Department
+
+```sql
+SELECT department_id, MAX(salary)
+FROM Employee
+GROUP BY department_id;
+```
+
+---
+
+## Employee Count By Hiring Year
+
+```sql
+SELECT YEAR(hire_date), COUNT(*)
+FROM Employee
+GROUP BY YEAR(hire_date);
+```
+
+---
+
+# 🚀 Learning Outcomes
+
+After completing this project, you will understand:
+
+- Relational database design
+- Primary and foreign keys
+- SQL joins
+- Filtering data
+- Aggregate functions
+- Grouping
+- Date handling in SQL
+- Pattern matching
+- Real-world database relationships
